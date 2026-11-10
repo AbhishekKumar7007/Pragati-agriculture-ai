@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Create account · Pragati{% endblock %}
+{% block content %}
+<div class="registration-scene">
+  <video class="registration-video" autoplay muted loop playsinline poster="{{ url_for('static', filename='images/registration-seedling.jpeg') }}" aria-hidden="true">
+    <source src="{{ url_for('static', filename='images/registration-background.mp4') }}" type="video/mp4">
+  </video>
+  <div class="registration-video-overlay"></div>
+  <div class="auth-wrap registration-auth-wrap"><form method="post" class="panel auth-panel">
+  <div class="eyebrow">JOIN PRAGATI FARMER SERVICES</div><h1>Create your account</h1><p class="muted">Create your account to access crop records, weather support and farmer tools.</p>
+  <label>Full name<input name="name" required maxlength="100" autocomplete="name" placeholder="Your name"></label>
+  <label>Email address<input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label>
+  <label>Password<input name="password" type="password" minlength="8" required autocomplete="new-password" placeholder="At least 8 characters"></label>
+  <button class="btn primary full" type="submit">Create account</button>
+  <p class="small center">Already registered? <a href="{{ url_for('login') }}">Log in</a></p>
+</form></div></div>
+{% endblock %}

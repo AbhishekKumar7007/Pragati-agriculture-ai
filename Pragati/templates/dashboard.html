@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · Pragati{% endblock %}
+{% block content %}
+<section class="dashboard-head"><div><div class="eyebrow">YOUR FARMING WORKSPACE</div><h1>Hello, {{ name|e }} 👋</h1><p class="muted">What would you like to do today?</p></div><div class="date-pill">📅 {{ today if today is defined else "Crop care, one step at a time" }}</div></section>
+<div class="dashboard-grid">
+  <a class="dash-card passport-card" href="{{ url_for('passport') }}"><div class="feature-icon">📒</div><span class="tag">RECORDS</span><h2>Crop Health Passport</h2><p>Save field observations and review crop history.</p><span class="card-link">Open passport →</span></a>
+  <a class="dash-card weather-card" href="{{ url_for('weather') }}"><div class="feature-icon">🌦️</div><span class="tag">FORECAST</span><h2>Weather Support</h2><p>Check current weather and the next three days.</p><span class="card-link">Check weather →</span></a>
+  <a class="dash-card" href="{{ url_for('symptom_checker') }}"><div class="feature-icon">🔎</div><span class="tag">GUIDANCE</span><h2>Symptom Checker</h2><p>Review possible causes of common crop symptoms.</p><span class="card-link">Check symptoms →</span></a>
+  <a class="dash-card" href="{{ url_for('disease_scanner') }}"><div class="feature-icon">📷</div><span class="tag">PROTOTYPE</span><h2>Disease Scanner</h2><p>Explore the image-upload interface; AI model not connected.</p><span class="card-link">Open scanner →</span></a>
+  <a class="dash-card" href="{{ url_for('assistant') }}"><div class="feature-icon">🗣️</div><span class="tag">VOICE DEMO</span><h2>Farm Assistant</h2><p>Try simple multilingual text and browser voice controls.</p><span class="card-link">Talk to assistant →</span></a>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Choose your language · Pragati{% endblock %}
+{% block content %}
+<section class="language-welcome">
+  <div class="language-mark"><img src="{{ url_for('static', filename='images/pragati-logo.png') }}" alt="Pragati logo"></div>
+  <div class="eyebrow">WELCOME TO PRAGATI</div>
+  <h1>Choose your language</h1>
+  <p class="language-subtitle">अपनी भाषा चुनें · ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ · আপনার ভাষা বেছে নিন</p>
+  <p class="muted">Choose the language you feel most comfortable using. You can change it later.</p>
+  <form method="post" action="{{ url_for('language') }}" class="language-form">
+    <div class="language-grid">
+      {% for code, name in supported_languages.items() %}
+      <label class="language-option">
+        <input type="radio" name="language" value="{{ code }}" {% if code == current_language %}checked{% endif %}>
+        <span class="language-option-card">
+          <strong>{{ name }}</strong>
+          <small>{{ {"en":"English","hi":"Hindi","pa":"Punjabi","bn":"Bengali","ta":"Tamil","te":"Telugu","mr":"Marathi","gu":"Gujarati","ur":"Urdu","ar":"Arabic","fr":"French","es":"Spanish"}[code] }}</small>
+        </span>
+      </label>
+      {% endfor %}
+    </div>
+    <button class="btn primary full language-continue" type="submit">Continue →</button>
+  </form>
+  <p class="small muted language-note">You can switch languages anytime from the website menu.</p>
+</section>
+{% endblock %}

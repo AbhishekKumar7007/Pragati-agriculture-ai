@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Disease Scanner Demo · Pragati{% endblock %}
+{% block content %}
+<section class="module-visual-banner" style="--module-bg:url('{{ url_for('static', filename='images/disease-scanner.png') }}')" role="img" aria-label="Disease Scanner: Upload a crop image for preview; AI diagnosis requires a trained model.">
+  <div class="module-visual-overlay"><span class="module-badge">PRAGATI • FARMER SUPPORT</span><h1>Disease Scanner</h1><p>Upload a crop image for preview; AI diagnosis requires a trained model.</p></div>
+</section>
+
+<section class="page-heading"><div class="eyebrow">IMAGE-BASED CROP CHECK</div><h1>Crop Disease Scanner</h1><p>This page is a front-end prototype. It does not make AI predictions until a trained image-classification model is connected.</p></section>
+<div class="panel scanner-panel">
+  <div class="upload-zone"><div class="upload-icon">📷</div><h2>Choose a crop photo</h2><p>For the future model integration, use a clear photo with the affected leaf in focus.</p><label class="btn primary upload-label" for="crop-image">Choose image</label><input id="crop-image" type="file" accept="image/*" hidden><div id="image-preview" class="image-preview"></div></div>
+  <div class="notice warning-notice"><b>Prototype only:</b> image preview works, but no disease name or confidence score is generated. Do not use this page to decide pesticide treatment.</div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/scanner.js') }}"></script>{% endblock %}

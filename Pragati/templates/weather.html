@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Weather Support · Pragati{% endblock %}
+{% block content %}
+<section class="module-visual-banner" style="--module-bg:url('{{ url_for('static', filename='images/weather-dashboard.png') }}')" role="img" aria-label="Weather Support: Local conditions and forecast to help plan farm activities.">
+  <div class="module-visual-overlay"><span class="module-badge">PRAGATI • FARMER SUPPORT</span><h1>Weather Support</h1><p>Local conditions and forecast to help plan farm activities.</p></div>
+</section>
+
+<section class="page-heading"><div class="eyebrow">WEATHER-AWARE SUPPORT</div><h1>Weather for your area</h1><p>Check current conditions and a 3-day forecast. Internet connection required.</p></section>
+<form method="post" class="weather-search panel"><label for="city">City or town</label><div class="search-row"><input id="city" name="city" value="{{ city }}" required placeholder="e.g. Dehradun"><button class="btn primary" type="submit">Get forecast</button></div></form>
+{% if result %}
+  {% if result.error %}<div class="flash danger">{{ result.error }}</div>
+  {% else %}
+    <div class="weather-location"><span>📍</span><div><h2>{{ result.location }}</h2><p class="muted small">Current conditions</p></div></div>
+    <div class="weather-current">
+      <div class="current-main"><span class="weather-emoji">🌤️</span><div><strong>{{ result.current.get('temperature_2m', '—') }}°C</strong><small>Temperature</small></div></div>
+      <div class="weather-stat"><span>💧</span><b>{{ result.current.get('relative_humidity_2m', '—') }}%</b><small>Humidity</small></div>
+      <div class="weather-stat"><span>💨</span><b>{{ result.current.get('wind_speed_10m', '—') }} km/h</b><small>Wind speed</small></div>
+      <div class="weather-stat"><span>☁️</span><b>{{ result.current.get('weather_code', '—') }}</b><small>Weather code</small></div>
+    </div>
+    <h2 class="subheading">3-day outlook</h2>
+    <div class="forecast-grid">
+    {% for i in range(result.daily.get('time', [])|length) %}
+      <article class="forecast-card"><div class="forecast-date">{{ result.daily.time[i] }}</div><div class="forecast-icon">🌦️</div><div class="temp-range">{{ result.daily.temperature_2m_max[i] }}° <span>/</span> {{ result.daily.temperature_2m_min[i] }}°C</div><div class="rain">🌧️ Rain: {{ result.daily.precipitation_sum[i] }} mm</div><small class="muted">Weather code: {{ result.daily.weather_code[i] }}</small></article>
+    {% endfor %}
+    </div>
+    <p class="notice">Agriculture note: forecast data is guidance only. Check local conditions before irrigation, spraying, or other field operations.</p>
+  {% endif %}
+{% endif %}
+{% endblock %}

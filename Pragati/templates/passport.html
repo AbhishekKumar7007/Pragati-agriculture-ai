@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Crop Health Passport · Pragati{% endblock %}
+{% block content %}
+<section class="module-visual-banner" style="--module-bg:url('{{ url_for('static', filename='images/crop-health-passport.png') }}')" role="img" aria-label="Crop Health Passport: Keep crop details, growth records, health updates and field notes together.">
+  <div class="module-visual-overlay"><span class="module-badge">PRAGATI • FARMER SUPPORT</span><h1>Crop Health Passport</h1><p>Keep crop details, growth records, health updates and field notes together.</p></div>
+</section>
+
+<section class="page-heading"><div class="eyebrow">YOUR FIELD JOURNAL</div><h1>Crop Health Passport</h1><p>Build a timeline of crop growth and field observations.</p></section>
+<div class="two-col">
+  <form method="post" class="panel form-panel">
+    <h2>Add an observation</h2>
+    <label>Crop name<input name="crop_name" required maxlength="80" placeholder="e.g. Tomato, Wheat"></label>
+    <label>Growth stage<select name="growth_stage" required><option value="">Choose stage</option><option>Seedling</option><option>Vegetative</option><option>Flowering</option><option>Fruiting</option><option>Maturity</option><option>Harvested</option><option>Other</option></select></label>
+    <label>Observation<textarea name="observation" required maxlength="2000" rows="4" placeholder="Describe leaves, soil moisture, pests, watering, or changes..."></textarea></label>
+    <label>Observation date<input type="date" name="log_date" value="{{ today }}" required></label>
+    <button class="btn primary full" type="submit">Save crop record</button>
+  </form>
+  <section class="panel history-panel">
+    <div class="history-title"><div><h2>Crop history</h2><p class="muted small">{{ records|length }} record(s) shown</p></div></div>
+    <form class="search-row" method="get"><input name="q" value="{{ search }}" placeholder="Search crop name"><button class="btn secondary" type="submit">Search</button>{% if search %}<a class="clear-link" href="{{ url_for('passport') }}">Clear</a>{% endif %}</form>
+    {% if records %}
+      <div class="record-list">
+      {% for r in records %}
+        <article class="record">
+          <div class="record-top"><span class="crop-badge">🌱 {{ r.crop_name }}</span><time>{{ r.log_date }}</time></div>
+          <div class="stage">{{ r.growth_stage }}</div><p>{{ r.observation }}</p><small class="muted">Record #{{ r.id }}</small>
+        </article>
+      {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state"><span>📔</span><h3>No records yet</h3><p>Add your first observation or change your search.</p></div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

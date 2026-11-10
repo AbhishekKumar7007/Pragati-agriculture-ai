@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Farm Assistant · Pragati{% endblock %}
+{% block content %}
+<section class="module-visual-banner" style="--module-bg:url('{{ url_for('static', filename='images/farm-assistant.png') }}')" role="img" aria-label="Farm Assistant: Ask farming questions using text or supported browser voice controls.">
+  <div class="module-visual-overlay"><span class="module-badge">PRAGATI • FARMER SUPPORT</span><h1>Farm Assistant</h1><p>Ask farming questions using text or supported browser voice controls.</p></div>
+</section>
+
+<section class="page-heading"><div class="eyebrow">MULTILINGUAL FARM ASSISTANT DEMO</div><h1>Ask a farming question</h1><p>Simple demo responses and browser speech controls. This is not a connected AI service.</p></section>
+<div class="panel assistant-panel">
+  <label>Language<select id="assistant-language"><option value="en">English</option><option value="hi">Hindi</option><option value="pa">Punjabi</option><option value="bn">Bengali</option><option value="ta">Tamil</option><option value="te">Telugu</option><option value="mr">Marathi</option><option value="ur">Urdu</option><option value="gu">Gujarati</option><option value="ar">Arabic</option><option value="fr">French</option><option value="es">Spanish</option></select></label>
+  <div class="chat-log" id="chat-log"><div class="chat-bubble bot">Hello! Ask about crop care, soil moisture, or recording crop symptoms. This demo uses simple keyword-based replies.</div></div>
+  <form id="assistant-form" class="chat-compose"><input id="assistant-message" placeholder="Type your farming question..." required maxlength="500"><button class="btn primary" type="submit">Send</button></form>
+  <div class="voice-actions"><button type="button" class="btn secondary" id="voice-input">🎙️ Voice input</button><button type="button" class="btn secondary" id="speak-last">🔊 Read last reply</button><span id="voice-status" class="small muted" aria-live="polite"></span></div>
+  <p class="small muted">Voice input availability varies by browser. Do not rely on the demo for urgent crop treatment decisions.</p>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/assistant.js') }}"></script>{% endblock %}

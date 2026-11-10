@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Symptom Checker · Pragati{% endblock %}
+{% block content %}
+<section class="module-visual-banner" style="--module-bg:url('{{ url_for('static', filename='images/symptom-checker.png') }}')" role="img" aria-label="Crop Symptom Checker: Record visible symptoms and review possible causes with cautious next steps.">
+  <div class="module-visual-overlay"><span class="module-badge">PRAGATI • FARMER SUPPORT</span><h1>Crop Symptom Checker</h1><p>Record visible symptoms and review possible causes with cautious next steps.</p></div>
+</section>
+
+<section class="page-heading"><div class="eyebrow">OBSERVE BEFORE YOU ACT</div><h1>Crop Symptom Checker</h1><p>Answer a few questions to see possible causes and cautious next steps.</p></section>
+<div class="two-col">
+<form method="post" class="panel form-panel">
+  <label>What do the leaves look like?<select name="leaf" required><option value="normal">Mostly normal / other symptoms</option><option value="yellow">Yellowing leaves</option></select></label>
+  <label>How does the soil feel?<select name="soil" required><option value="unknown">Not sure / normal</option><option value="dry">Dry</option><option value="wet">Very wet</option></select></label>
+  <label>Are there spots on leaves?<select name="spots" required><option value="no">No / not sure</option><option value="yes">Yes</option></select></label>
+  <label>Can you see insects or feeding marks?<select name="pests" required><option value="no">No / not sure</option><option value="yes">Yes</option></select></label>
+  <button class="btn primary full" type="submit">Review possible causes</button>
+</form>
+<section class="panel result-panel">
+{% if result %}
+  <div class="result-icon">🌿</div><div class="eyebrow">POSSIBLE EXPLANATION</div><h2>{{ result.title }}</h2><p>{{ result.detail }}</p><h3>Suggested next steps</h3><ul>{% for action in result.actions %}<li>{{ action }}</li>{% endfor %}</ul>
+{% else %}
+  <div class="empty-state"><span>🔎</span><h2>Start with observations</h2><p>This tool provides general guidance only. Similar symptoms can have different causes.</p></div>
+{% endif %}
+</section>
+</div>
+{% endblock %}

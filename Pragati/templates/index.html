@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Pragati | Farmer Services Portal{% endblock %}
+{% block content %}
+<section class="portal-hero">
+  <div class="portal-hero-image"></div>
+  <div class="portal-hero-content">
+    <span class="portal-kicker">किसान की उन्नति, देश की प्रगति</span>
+    <h1>Smart Farming.<br><span>Better Harvests.</span></h1>
+    <p>Crop guidance, weather updates, crop records and farmer services — all in one place.</p>
+    <p class="hero-hindi">फसल की देखभाल, मौसम की जानकारी और किसान सेवाएँ — एक ही जगह।</p>
+    <form class="service-search" action="#services" method="get">
+      <span aria-hidden="true">⌕</span>
+      <input id="serviceSearch" type="search" placeholder="Search farmer services..." aria-label="Search farmer services">
+      <button type="button" onclick="filterServices()">Search</button>
+    </form>
+    <div class="popular-searches"><span>Popular:</span><a href="#services">Soil Health</a><a href="#services">Crop Insurance</a><a href="#services">Weather</a><a href="#services">Crop Registry</a></div>
+  </div>
+</section>
+
+<section class="portal-content" id="about"><div class="about-strip"><strong>About Pragati</strong><span>A farmer-friendly digital agriculture assistant for crop records, local weather and crop-care guidance.</span></div></section>
+<section class="portal-content dashboard-image-section" id="services">
+  <div class="portal-section-title"><div><span class="section-leaf">🌱</span><div><h2>Popular Farmer Services</h2><p>Useful tools for your everyday farming needs</p></div></div><a href="{{ url_for('dashboard') if session.get('user_id') else url_for('register') }}" class="view-all">View all services <span>→</span></a></div>
+  <div class="portal-main-grid">
+    <div class="portal-service-grid" id="serviceGrid">
+      <a class="portal-service-card" data-search="farmer registration account signup" href="{{ url_for('register') }}"><span class="portal-service-icon icon-green">♙</span><span class="portal-service-copy"><strong>Farmer Registration</strong><small>Create an account to access Pragati services.</small></span><span class="portal-arrow">›</span></a>
+      <a class="portal-service-card" data-search="crop health passport crop records field observations" href="{{ url_for('passport') if session.get('user_id') else url_for('login') }}"><span class="portal-service-icon icon-gold">▤</span><span class="portal-service-copy"><strong>Crop Health Passport</strong><small>Record growth stages, dates and observations.</small></span><span class="portal-arrow">›</span></a>
+      <a class="portal-service-card" data-search="weather forecast rain temperature" href="{{ url_for('weather') if session.get('user_id') else url_for('login') }}"><span class="portal-service-icon icon-blue">☀</span><span class="portal-service-copy"><strong>Weather Advisory</strong><small>Check local weather and the next three days.</small></span><span class="portal-arrow">›</span></a>
+      <a class="portal-service-card" data-search="crop disease scanner photo image" href="{{ url_for('disease_scanner') if session.get('user_id') else url_for('login') }}"><span class="portal-service-icon icon-orange">⌕</span><span class="portal-service-copy"><strong>Crop Disease Scanner</strong><small>Preview a crop image for future AI diagnosis.</small></span><span class="portal-arrow">›</span></a>
+      <a class="portal-service-card" data-search="symptom checker yellow leaves spots pests" href="{{ url_for('symptom_checker') if session.get('user_id') else url_for('login') }}"><span class="portal-service-icon icon-green">✿</span><span class="portal-service-copy"><strong>Symptom Checker</strong><small>Review possible causes of crop symptoms.</small></span><span class="portal-arrow">›</span></a>
+      <a class="portal-service-card" data-search="farm assistant language voice hindi english" href="{{ url_for('assistant') if session.get('user_id') else url_for('login') }}"><span class="portal-service-icon icon-purple">☏</span><span class="portal-service-copy"><strong>Multilingual Farm Assistant</strong><small>Explore text and browser voice assistance.</small></span><span class="portal-arrow">›</span></a>
+    </div>
+    <aside class="portal-side-column">
+      <div class="weather-preview">
+        <div class="weather-preview-top"><span>🌤️</span><div><h3>Weather Support</h3><p>Plan farming around local conditions</p></div></div>
+        <div class="weather-preview-callout"><strong>3-day forecast</strong><span>Temperature · Rain · Wind</span></div>
+        <a href="{{ url_for('weather') if session.get('user_id') else url_for('login') }}">Check local weather <b>→</b></a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="announcement-bar" id="help"><span class="announcement-label">🌱 Important Notice</span><p>Pragati is a student prototype. Please verify crop-care decisions with a local agricultural expert.</p><a href="{{ url_for('register') }}">Get started →</a></section>
+<script>
+function filterServices() {
+  const query = (document.getElementById('serviceSearch').value || '').trim().toLowerCase();
+  document.querySelectorAll('.portal-service-card').forEach(card => {
+    card.style.display = !query || (card.dataset.search + ' ' + card.innerText).toLowerCase().includes(query) ? 'flex' : 'none';
+  });
+  document.getElementById('services').scrollIntoView({behavior:'smooth'});
+}
+document.getElementById('serviceSearch').addEventListener('keydown', event => {
+  if (event.key === 'Enter') { event.preventDefault(); filterServices(); }
+});
+</script>
+{% endblock %}

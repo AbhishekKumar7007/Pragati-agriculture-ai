@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }} | Pragati{% endblock %}
+{% block content %}
+<section class="about-page-wrap">
+  <div class="about-page-hero">
+    <span class="portal-kicker">ABOUT PRAGATI</span>
+    <h1>{{ page.title }}</h1>
+    <p>Pragati is a farmer-focused digital agriculture assistant prototype.</p>
+  </div>
+  <div class="about-page-content">
+    <a class="about-back-link" href="{{ url_for('index') }}">← Back to Home</a>
+    <h2>{{ page.heading }}</h2>
+    {% for paragraph in page.paragraphs %}
+      <p>{{ paragraph }}</p>
+    {% endfor %}
+    {% if page.bullets %}
+      <ul class="about-bullets">
+      {% for item in page.bullets %}<li>{{ item }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+    <p class="about-disclaimer">Pragati is a student project prototype. It is not an official government portal, and official schemes or registrations must be verified with the relevant department.</p>
+  </div>
+</section>
+{% endblock %}

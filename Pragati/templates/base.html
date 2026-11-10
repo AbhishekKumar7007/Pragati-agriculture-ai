@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="{{ current_language }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Pragati{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/pragati-logo.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<a class="skip-main-link" href="#main-content">Skip to Main</a>
+<div class="portal-reference-bar">
+  <div class="reference-helpdesk">☎ <strong>Helpdesk No.:</strong> <a href="tel:7505257763">7505257763</a></div>
+  <div class="reference-tools">
+    <a href="#main-content" class="skip-main-inline">Skip to Main</a>
+    <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-switch"></span><span id="themeLabel">Light</span>/<span>Dark</span></button>
+  </div>
+</div>
+<header class="topbar">
+<a class="brand" href="{{ url_for('index') }}"><img class="brand-logo" src="{{ url_for('static', filename='images/pragati-logo.png') }}" alt="Pragati logo"><span class="brand-name">Pragati</span></a>
+  <nav>
+    <a href="{{ url_for('index') }}">Home</a>
+    <details class="about-dropdown">
+      <summary>About Us <span class="dropdown-caret">▾</span></summary>
+      <div class="about-menu">
+        <a href="{{ url_for('about_page', section='history') }}">History</a>
+        <a href="{{ url_for('about_page', section='structure') }}">Organizational Structure</a>
+        <a href="{{ url_for('about_page', section='objective') }}">Objective</a>
+      </div>
+    </details>
+    <details class="language-dropdown">
+      <summary>🌐 {{ supported_languages.get(current_language, "English") }}</summary>
+      <form method="post" action="{{ url_for('language') }}" class="language-menu">
+        <input type="hidden" name="next" value="{{ request.path }}">
+        {% for code, name in supported_languages.items() %}
+          <button type="submit" name="language" value="{{ code }}" lang="{{ code }}" {% if code == current_language %}aria-current="true"{% endif %}>{{ name }}</button>
+        {% endfor %}
+      </form>
+    </details>
+    {% if session.get('user_id') %}
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('passport') }}">Crop Passport</a>
+      <a href="{{ url_for('weather') }}">Weather</a>
+      <a href="{{ url_for('logout') }}">Log out</a>
+    {% else %}
+      <a href="{{ url_for('login') }}" class="login-link">Login</a>
+      <a class="nav-cta" href="{{ url_for('register') }}">Registration</a>
+    {% endif %}
+  </nav>
+</header>
+<main class="page" id="main-content" tabindex="-1">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-stack">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer">Pragati · Student prototype · Verify crop treatments with local agricultural experts.</footer>
+{% block scripts %}{% endblock %}
+<script>
+(function () {
+  const toggle = document.getElementById('themeToggle');
+  const label = document.getElementById('themeLabel');
+  if (!toggle) return;
+  const savedTheme = localStorage.getItem('pragati-theme') || 'light';
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const dark = theme === 'dark';
+    toggle.setAttribute('aria-pressed', String(dark));
+    toggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    if (label) label.textContent = dark ? 'Dark' : 'Light';
+  }
+  applyTheme(savedTheme);
+  toggle.addEventListener('click', function () {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('pragati-theme', next);
+    applyTheme(next);
+  });
+})();
+</script>
+</body>
+</html>

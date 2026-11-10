@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}{{ code }} · Pragati{% endblock %}
+{% block content %}<section class="empty-state panel"><span>🌱</span><h1>{{ code }}</h1><p>{{ message }}</p><a class="btn primary" href="{{ url_for('index') }}">Go home</a></section>{% endblock %}
